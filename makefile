@@ -4,22 +4,20 @@
 
 NAME        = pipex
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror
+CFLAGS      = -Wall -Wextra -Werror -g3
 RM          = rm -f
 
-# Paths
+# Includes
 LIBFT_DIR   = libft
 LIBFT_A     = $(LIBFT_DIR)/libft.a
 INCLUDES    = -I$(LIBFT_DIR)/includes -I.
 
 # Sources
-SRC         = \
-				pipex.c \
-				pipex_utils.c
+SRC         = pipex.c pipex_utils.c
+OBJ_DIR     = obj
+OBJ         = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-OBJ         = $(SRC:.c=.o)
-
-# ANSI Colors
+# Colors
 GREEN       = \033[1;32m
 BLUE        = \033[1;34m
 RED         = \033[1;31m
@@ -34,21 +32,24 @@ all: $(LIBFT_A) $(NAME)
 
 $(LIBFT_A):
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) > /dev/null
-	@echo "$(GREEN)📚 Libft compilée avec succès.$(RESET)"
+	@echo "$(RED)==============================="
+	@echo "$(GREEN)📚 Libft compilée avec succès !$(RESET)"
 
 $(NAME): $(OBJ) $(LIBFT_A)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBFT_A) -o $(NAME)
 	@echo "$(GREEN)$(BOLD)🚀 pipex compilé avec succès !$(RESET)"
+	@echo "$(RED)==============================="
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean > /dev/null
-	@$(RM) $(OBJ)
-	@echo
+	@$(RM) -rf $(OBJ_DIR)
+	@echo "$(RED)===================="
 	@echo "$(BLUE)🧹 Objets nettoyés !$(RESET)"
-	@echo
+	@echo "$(RED)===================="
 
 fclean: clean
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean > /dev/null
@@ -57,4 +58,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
