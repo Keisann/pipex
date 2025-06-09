@@ -6,7 +6,7 @@
 /*   By: flren <flren@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:50:51 by flren             #+#    #+#             */
-/*   Updated: 2025/06/06 18:23:26 by flren            ###   ########.fr       */
+/*   Updated: 2025/06/09 17:54:58 by flren            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	child1_process(char **av, int *p_fd, char **envp)
 {
-	int	fd;
-	char **cmd_valid;
+	int		fd;
+	char	**cmd_valid;
 
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
@@ -35,8 +35,8 @@ void	child1_process(char **av, int *p_fd, char **envp)
 
 void	child2_process(char **av, int *p_fd, char **envp)
 {
-	int	fd;
-	char **cmd_valid;
+	int		fd;
+	char	**cmd_valid;
 
 	fd = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
@@ -56,8 +56,8 @@ void	child2_process(char **av, int *p_fd, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	int	fd[2];
-	int	status;
+	int		fd[2];
+	int		status;
 	pid_t	pid1;
 	pid_t	pid2;
 
